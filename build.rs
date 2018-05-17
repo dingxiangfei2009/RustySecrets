@@ -69,22 +69,16 @@ impl fmt::Display for Tables {
     }
 }
 
-fn build_protobuf<'a>(
-    out_dir: &'a str,
-    input: &'a [&'a str],
-    includes: &'a [&'a str],
-) {
+fn build_protobuf<'a>(out_dir: &'a str, input: &'a [&'a str], includes: &'a [&'a str]) {
     use self::protoc_rust::{run, Args, Customize};
-    run(
-        Args {
-            out_dir,
-            input,
-            includes,
-            customize: Customize {
-                ..Default::default()
-            },
-        }
-    ).expect("protoc");
+    run(Args {
+        out_dir,
+        input,
+        includes,
+        customize: Customize {
+            ..Default::default()
+        },
+    }).expect("protoc");
 }
 
 fn generate_gf256_table() {
@@ -117,14 +111,14 @@ fn main() {
             "protobuf/dss/secret.proto",
             "protobuf/dss/share.proto",
         ],
-        &["protobuf", "protobuf/dss"]
+        &["protobuf", "protobuf/dss"],
     );
     build_protobuf(
         "src/proto/wrapped",
         &[
             "protobuf/wrapped/secret.proto",
-            "protobuf/wrapped/share.proto"
+            "protobuf/wrapped/share.proto",
         ],
-        &["protobuf", "protobuf/dss"]
+        &["protobuf", "protobuf/dss"],
     );
 }
