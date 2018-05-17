@@ -45,12 +45,10 @@ env:
   - RUSTFLAGS="-C link-dead-code"
 
 script:
+  - export PATH=$PATH:$HOME/protobuf/bin
   - cargo build --verbose --all-features
   - cargo test --verbose --all-features
   - cargo doc --verbose --all-features
 
 before_install:
-  - curl -OL https://github.com/google/protobuf/releases/download/v3.2.0/protoc-3.2.0-linux-x86_64.zip
-  - unzip protoc-3.2.0-linux-x86_64.zip -d protoc3
-  - sudo cp protoc3/bin/* /usr/local/bin/
-  - sudo cp protoc3/include/* /usr/local/include/
+  - bash install_protobuf.sh
