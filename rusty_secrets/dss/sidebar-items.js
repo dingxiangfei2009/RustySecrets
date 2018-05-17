@@ -1,0 +1,1 @@
+initSidebarItems({"mod":[["ss1","Implements the `SS1` deterministic threshold secret sharing scheme."],["thss","Implements the `ThSS` threshold secret sharing scheme."]],"struct":[["AccessStructure","Define the access structure used to deal and recover the shares."]]});

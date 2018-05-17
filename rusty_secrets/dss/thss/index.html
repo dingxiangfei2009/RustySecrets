@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `thss` mod in crate `rusty_secrets`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, thss">
+
+    <title>rusty_secrets::dss::thss - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc mod">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
+        
+        <p class='location'>Module thss</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#functions">Functions</a></li></ul></div><p class='location'><a href='../../index.html'>rusty_secrets</a>::<wbr><a href='../index.html'>dss</a></p><script>window.sidebarCurrent = {name: 'thss', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script></div>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Module <a href='../../index.html'>rusty_secrets</a>::<wbr><a href='../index.html'>dss</a>::<wbr><a class="mod" href=''>thss</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../../../src/rusty_secrets/dss/thss/mod.rs.html#1-122' title='goto source code'>[src]</a></span></h1>
+<div class='docblock'><p>Implements the <code>ThSS</code> threshold secret sharing scheme.</p>
+
+<p>This scheme satisfies the following security properties:</p>
+
+<table>
+<thead>
+<tr>
+<th><strong>Property</strong></th>
+<th><strong>Satisifed?</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><strong>Basic</strong></td>
+<td>Yes</td>
+<td>Basic correctness: If you attempt to recover a secret from an authorized set of shares that were obtained by sharing out a secret <strong>M</strong> using an access structure <strong>A</strong>, you&#39;re sure to get back <strong>A</strong> and <strong>M</strong>.<br> <em>Note: in this implementation <strong>A</strong> is not actually returned, but definitely could.</em></td>
+</tr>
+<tr>
+<td><strong>Priv1</strong></td>
+<td>Yes</td>
+<td>Standard privacy notation: When the coins are used by the dealer are uniformly random, unauthorized sets of shares have no computationally extractable information about the underlying secret.</td>
+</tr>
+<tr>
+<td><strong>Priv2</strong></td>
+<td>No</td>
+<td>Privacy for deterministic or hedged schemes: extract whatever entropy one can from the underlying secret. If it’s adequate, no additional randomness is needed in order to achieve a meaningful notion of privacy.</td>
+</tr>
+<tr>
+<td><strong>Auth1</strong></td>
+<td>No</td>
+<td>A share obtained from an honest dealer commits it to a single underlying secret: that and only that value can be recovered.</td>
+</tr>
+<tr>
+<td><strong>Auth2</strong></td>
+<td>No</td>
+<td>A share obtained even from a dishonest dealer commits it to a single underlying secret: that and only that value might be recovered. Implies Auth1.</td>
+</tr>
+<tr>
+<td><strong>ErrDet</strong></td>
+<td>Yes</td>
+<td>An inauthentic set of shares produced by an adversary will be flagged as such when fed to the recovery algorithm.</td>
+</tr>
+<tr>
+<td><strong>Repro</strong></td>
+<td>No</td>
+<td>Share reproducible: The scheme can produce shares in a deterministic way.</td>
+</tr>
+</tbody>
+</table>
+</div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.MetaData.html"
+                                  title='struct rusty_secrets::dss::thss::MetaData'>MetaData</a></td>
+                           <td class='docblock-short'>
+                                <p>A share&#39;s public metadata.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.Share.html"
+                                  title='struct rusty_secrets::dss::thss::Share'>Share</a></td>
+                           <td class='docblock-short'>
+                                <p>A share identified by an <code>id</code>, a threshold <code>k</code>, a number of total shares <code>n</code>,
+the <code>data</code> held in the share, and the share&#39;s <code>metadata</code>.</p>
+                           </td>
+                       </tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.recover_secret.html"
+                                  title='fn rusty_secrets::dss::thss::recover_secret'>recover_secret</a></td>
+                           <td class='docblock-short'>
+                                <p>Recovers the secret from a k-out-of-n secret sharing scheme (<code>ThSS</code>).</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.split_secret.html"
+                                  title='fn rusty_secrets::dss::thss::split_secret'>split_secret</a></td>
+                           <td class='docblock-short'>
+                                <p>Performs threshold k-out-of-n secret sharing using the <code>ThSS</code> scheme.</p>
+                           </td>
+                       </tr></table></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>↑</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>↓</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt style="width:31px;">+ / -</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../../";
+        window.currentCrate = "rusty_secrets";
+    </script>
+    <script src="../../../main.js"></script>
+    <script defer src="../../../search-index.js"></script>
+</body>
+</html>
